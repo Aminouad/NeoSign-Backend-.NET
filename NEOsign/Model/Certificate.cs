@@ -6,6 +6,7 @@
         public string Type { get; set; }
         public string Path { get; set; }
 
+
         public byte[]? Content { get; set; } = null;
 
         public User? User { get; set; }

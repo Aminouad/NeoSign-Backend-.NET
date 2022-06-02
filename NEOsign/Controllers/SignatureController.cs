@@ -29,7 +29,7 @@ namespace NEOsign.Controllers
                 .Where(d => d.Id == doc.idDocument).SingleOrDefault();
             var options = new RestClientOptions("http://localhost:8081/")
             {
-                Timeout = 5000,
+                Timeout = 10000,
 
                 ThrowOnAnyError = true
             };
