@@ -4,7 +4,8 @@
     {
         public int idDocument { get; set; }
         public string passwordCertificate { get; set; } = string.Empty;
-
+        public string typeOfSignature { get; set; } = string.Empty;
+        
         public string userEmail { get; set; } = string.Empty;
     }
 }

@@ -21,22 +21,22 @@ namespace NEOsign.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> SignPdf(DocumentToSign doc)
+        public async Task<IActionResult> SignPdfNotVisible( DocumentToSign doc)
         {
-            var owner = _context.Users.SingleOrDefault(a => a.Email == doc.userEmail);
+            var owner = _context.Users.FirstOrDefault(a => a.Email == doc.userEmail);
             var cert = _context.Certificates.SingleOrDefault(a => a.UserId == owner.Id);
             var document = _context.Documents.Where(d => d.User == owner)
                 .Where(d => d.Id == doc.idDocument).SingleOrDefault();
             var options = new RestClientOptions("http://localhost:8081/")
             {
-                Timeout = 10000,
+                Timeout = -1,
 
                 ThrowOnAnyError = true
             };
             string s = @"\" + owner.Id;
 
             var client = new RestClient(options);
-            var request = new RestRequest("api/sign-pdf?document&certificate&pawssord", Method.Post);
+            var request = new RestRequest("api/sign-pdfNotVisible?document&certificatePath&pawssord&typeOfSignature", Method.Post);
             request.AlwaysMultipartFormData = true;
 
 
@@ -45,6 +45,8 @@ namespace NEOsign.Controllers
 
             request.AddParameter("pathCertificate",cert.Path);
             request.AddParameter("password", doc.passwordCertificate);
+            request.AddParameter("typeOfSignature", doc.typeOfSignature);
+
             request.AddHeader("Content-Type", "multipart/form-data");
 
             //RestResponse response = await client.ExecuteAsync(request);

@@ -1,6 +1,8 @@
 ﻿namespace NEOsign.Repositories
 {
-    public class ICompanyRepository
+    public interface ICompanyRepository
     {
+        public Task<string> DeleteCompany(int id);
+
     }
 }

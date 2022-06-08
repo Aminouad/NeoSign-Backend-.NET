@@ -18,14 +18,14 @@ namespace NEOsign.Controllers
             _context = context;
             _documentService = documentService;
         }
-        [HttpPost, Authorize]
+        [HttpPost]
         public async Task<IActionResult> AddDocument([FromForm] DocumentDto documentDto)
         {
             if (documentDto.File != null)
             {
 
                 var baseURL = _hostingEnvironment.ContentRootPath;
-                var owner = _context.Users.SingleOrDefault(a => a.Email == documentDto.Owner);
+                var owner = _context.Users.FirstOrDefault(a => a.Email == documentDto.Owner);
 
                 var fileName = Path.GetFileName(documentDto.File.FileName);
 

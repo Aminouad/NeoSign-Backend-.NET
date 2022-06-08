@@ -8,9 +8,24 @@
         {
             _context = context;
         }
+
+      async  public Task<string> DeleteUser(int id)
+        {
+             User user = _context.Users.Find(id);
+              if(user == null)
+            {
+                return "user not found";
+            }
+            
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
+
+            return "User deleted";
+        }
+
         public  User GetUserByEmail(string email)
         {
-             var owner =  _context.Users.SingleOrDefault(a => a.Email == email);
+             var owner =  _context.Users.FirstOrDefault(a => a.Email == email);
             if(owner != null)
             {
                 return owner;

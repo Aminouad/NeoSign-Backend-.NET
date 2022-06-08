@@ -2,6 +2,6 @@
 {
     public interface ICompanyService
     {
-        
+        public Task<string> DeleteCompany(int id);
     }
 }

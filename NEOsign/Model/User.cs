@@ -12,7 +12,6 @@ namespace NEOsign.Model
         public byte[] PasswordSalt { get; set; }
         public ICollection<Document> Documents { get; set; }
         public ICollection<Company> Companies { get; set; }
-        public ICollection<Notification> Notifications { get; set; }
         public Certificate? Certificate { get; set; }
 
 
