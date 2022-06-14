@@ -12,8 +12,8 @@ using NEOsign.Data;
 namespace NEOsign.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220607082032_finalMigrations")]
-    partial class finalMigrations
+    [Migration("20220614084357_createInit")]
+    partial class createInit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -36,6 +36,10 @@ namespace NEOsign.Migrations
                         .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Path")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PathImage")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -62,6 +66,10 @@ namespace NEOsign.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Contact")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -79,10 +87,6 @@ namespace NEOsign.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PostalCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -142,6 +146,40 @@ namespace NEOsign.Migrations
                     b.ToTable("Documents");
                 });
 
+            modelBuilder.Entity("NEOsign.Model.Personnel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Date")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Position")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Personnels");
+                });
+
             modelBuilder.Entity("NEOsign.Model.User", b =>
                 {
                     b.Property<int>("Id")
@@ -189,7 +227,7 @@ namespace NEOsign.Migrations
             modelBuilder.Entity("NEOsign.Model.Company", b =>
                 {
                     b.HasOne("NEOsign.Model.User", "User")
-                        .WithMany("Companies")
+                        .WithMany("Company")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -208,13 +246,26 @@ namespace NEOsign.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("NEOsign.Model.Personnel", b =>
+                {
+                    b.HasOne("NEOsign.Model.User", "User")
+                        .WithMany("Personnels")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("NEOsign.Model.User", b =>
                 {
                     b.Navigation("Certificate");
 
-                    b.Navigation("Companies");
+                    b.Navigation("Company");
 
                     b.Navigation("Documents");
+
+                    b.Navigation("Personnels");
                 });
 #pragma warning restore 612, 618
         }

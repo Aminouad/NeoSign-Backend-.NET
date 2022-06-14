@@ -14,14 +14,26 @@
             if (company == null)
                 return "error";
             User user =  _context.Users.Single(a => a.Email == company.Contact);
-            // User user = _context.Users.OrderBy(e => e.Email == company.Contact).Include(e => e.Documents).First();
-            _context.Users.Remove(user);
-
-            await _context.SaveChangesAsync();
-
+            // User user = _context.Users.OrderBy(e => e.Email == company.Contact).Include(e => e.Documents).First();          
             _context.Companies.Remove(company);
+            await _context.SaveChangesAsync();
+            _context.Users.Remove(user);
             await _context.SaveChangesAsync();
             return "deleted";
         }
+        public async Task<Company> AddCompany(Company company, User user)
+        {
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+            _context.Companies.Add(company);
+            await _context.SaveChangesAsync();
+            return company;
+        }
+        public async Task<ICollection<Company>> GetAllCompany()
+        {
+           return  await _context.Companies.ToListAsync();
+        }
+
+
     }
 }

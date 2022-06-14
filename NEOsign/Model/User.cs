@@ -11,7 +11,8 @@ namespace NEOsign.Model
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
         public ICollection<Document> Documents { get; set; }
-        public ICollection<Company> Companies { get; set; }
+        public  ICollection<Company> Company { get; set; }
+        public ICollection<Personnel>? Personnels { get; set; }
         public Certificate? Certificate { get; set; }
 
 

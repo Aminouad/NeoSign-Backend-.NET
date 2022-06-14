@@ -12,14 +12,14 @@ namespace NEOsign.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthController : ControllerBase
+    public class AuthenticationController : ControllerBase
     {
         private readonly IConfiguration _configuration;
         private readonly IUserService _userService;
         private readonly DataContext _context;
         public static User user = new User();
 
-        public AuthController(IConfiguration configuration, IUserService userService, DataContext context)
+        public AuthenticationController(IConfiguration configuration, IUserService userService, DataContext context)
         {
             _configuration = configuration;
             _userService = userService;
@@ -38,7 +38,7 @@ namespace NEOsign.Controllers
 
         }
 
-        [HttpPost("register"), Authorize]
+        [HttpPost("register")]
         public async Task<ActionResult<User>> Register(UserDtoRegister request)
         {
             CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);

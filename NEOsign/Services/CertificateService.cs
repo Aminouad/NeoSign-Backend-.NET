@@ -15,5 +15,10 @@ namespace NEOsign.Services
         {
            return _certificateRepository.AddCertificate(certificate);
         }
+        public Certificate GetCertificate(int userId)
+        {
+            return _certificateRepository.GetCertificate(userId);
+        }
+
     }
 }

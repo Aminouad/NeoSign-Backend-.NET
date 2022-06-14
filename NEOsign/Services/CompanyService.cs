@@ -16,5 +16,14 @@ namespace NEOsign.Services
         {
             return await _companyRepositorie.DeleteCompany(id);
         }
+        public async Task<Company> AddCompany(Company company, User user)
+        {
+            return await _companyRepositorie.AddCompany(company, user);
+        }
+        public async Task<ICollection<Company>> GetAllCompany()
+        {
+            return await _companyRepositorie.GetAllCompany();       
+        }
+
     }
 }
