@@ -10,11 +10,16 @@ namespace NEOsign.Repositories
         {
             _context = context;
         }
-       
+
+
+        public  Certificate GetCertificate(int userId)
+        {
+            return _context.Certificates.SingleOrDefault(c => c.UserId == userId);
+        }
 
 
 
-        
+
 
         public async Task<Certificate> AddCertificate(Certificate certificate)
         {

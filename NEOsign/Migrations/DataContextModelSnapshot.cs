@@ -37,6 +37,10 @@ namespace NEOsign.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PathImage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -60,6 +64,10 @@ namespace NEOsign.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Contact")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -73,6 +81,10 @@ namespace NEOsign.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -122,6 +134,7 @@ namespace NEOsign.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("UserId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -131,7 +144,7 @@ namespace NEOsign.Migrations
                     b.ToTable("Documents");
                 });
 
-            modelBuilder.Entity("NEOsign.Model.Notification", b =>
+            modelBuilder.Entity("NEOsign.Model.Personnel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -139,7 +152,19 @@ namespace NEOsign.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Message")
+                    b.Property<string>("Date")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Position")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -150,7 +175,7 @@ namespace NEOsign.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Notifications");
+                    b.ToTable("Personnels");
                 });
 
             modelBuilder.Entity("NEOsign.Model.User", b =>
@@ -200,7 +225,7 @@ namespace NEOsign.Migrations
             modelBuilder.Entity("NEOsign.Model.Company", b =>
                 {
                     b.HasOne("NEOsign.Model.User", "User")
-                        .WithMany("Companies")
+                        .WithMany("Company")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -212,15 +237,17 @@ namespace NEOsign.Migrations
                 {
                     b.HasOne("NEOsign.Model.User", "User")
                         .WithMany("Documents")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("NEOsign.Model.Notification", b =>
+            modelBuilder.Entity("NEOsign.Model.Personnel", b =>
                 {
                     b.HasOne("NEOsign.Model.User", "User")
-                        .WithMany("Notifications")
+                        .WithMany("Personnels")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -232,11 +259,11 @@ namespace NEOsign.Migrations
                 {
                     b.Navigation("Certificate");
 
-                    b.Navigation("Companies");
+                    b.Navigation("Company");
 
                     b.Navigation("Documents");
 
-                    b.Navigation("Notifications");
+                    b.Navigation("Personnels");
                 });
 #pragma warning restore 612, 618
         }

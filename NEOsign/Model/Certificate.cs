@@ -6,6 +6,7 @@
         public string Type { get; set; }
         public string Path { get; set; }
 
+        public string PathImage { get; set; }
 
         public byte[]? Content { get; set; } = null;
 

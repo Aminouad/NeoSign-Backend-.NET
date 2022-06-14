@@ -15,10 +15,25 @@ namespace NEOsign.Services
         {
             return await _documentRepositorie.ModifyDocument(id,name,description);
         }
+        public ICollection<Document> GetDocumentsByUser(int userId)
+        {
+            return _documentRepositorie.GetDocumentsByUser(userId);
+        }
+
         async public Task<string> DeleteDocument(int id)
         {
             return await _documentRepositorie.DeleteDocument(id);
         }
+        public Document GetDocumentById(int idDocument)
+        {
+            return _documentRepositorie.GetDocumentById(idDocument);
+        }
+        public Task<Document> AddDocument(Document document)
+        {
+            return  _documentRepositorie.AddDocument(document);
+        }
+
+
 
     }
 }

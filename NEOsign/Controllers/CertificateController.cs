@@ -31,8 +31,17 @@ namespace NEOsign.Controllers
                 var owner = _userService.GetUserByEmail(certificateDto.Owner);
 
                 var fileName = Path.GetFileName(certificateDto.File.FileName);
-
                 var filePath = Path.Combine(@"C:\Users\ao\Documents\ApiSignatureNeoSign\ApiSignature\src\main\resources\", "CertificateUser" + owner.Id, fileName);
+                String imageName = null;
+                String imagePath = null;
+
+                if (certificateDto.Image!= null)
+                {
+                     imageName = Path.GetFileName(certificateDto.Image.FileName);
+                     imagePath = Path.Combine(@"C:\Users\ao\Documents\ApiSignatureNeoSign\ApiSignature\src\main\resources\", "CertificateUser" + owner.Id, imageName);
+                }
+               
+
                 string dir = Path.Combine(baseURL, @"C:\Users\ao\Documents\ApiSignatureNeoSign\ApiSignature\src\main\resources\", "CertificateUser" + owner.Id);
                 if (!Directory.Exists(dir))
                 {
@@ -42,9 +51,17 @@ namespace NEOsign.Controllers
                 {
                     await certificateDto.File.CopyToAsync(fileSteam);
                 }
+                if(imagePath != null && imagePath!= null)
+                {
+                    using (var fileSteamImg = new FileStream(imagePath, FileMode.Create))
+                    {
+                        await certificateDto.Image.CopyToAsync(fileSteamImg);
+                    }
+                }
+
+
                 Certificate cert = new Certificate();
 
-                
 
 
                 cert.Type = certificateDto.type;
@@ -52,6 +69,8 @@ namespace NEOsign.Controllers
                 cert.User = owner;
                 cert.UserId = owner.Id;
                 cert.Path = filePath;
+                cert.PathImage = imagePath;
+
                 await _certificateService.AddCertificate(cert);
 
 
