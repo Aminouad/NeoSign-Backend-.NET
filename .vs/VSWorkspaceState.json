@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\NEOsign"
+    "\\NEOsign",
+    "\\NEOsign\\Controllers"
   ],
-  "SelectedNode": "\\NEOsign\\appsettings.json",
+  "SelectedNode": "\\NEOsign\\NEOsign.csproj",
   "PreviewInSolutionExplorer": false
 }

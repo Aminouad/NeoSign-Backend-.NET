@@ -11,9 +11,9 @@ namespace NEOsign.Services
         {
             _certificateRepository = certificateRepository;
         }
-        public Task<Certificate> AddCertificate(Certificate certificate)
+        public Task<Certificate> AddCertificate(Certificate certificate,User owner)
         {
-           return _certificateRepository.AddCertificate(certificate);
+           return _certificateRepository.AddCertificate(certificate,owner);
         }
         public Certificate GetCertificate(int userId)
         {

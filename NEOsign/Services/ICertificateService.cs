@@ -2,7 +2,7 @@
 {
     public interface ICertificateService
     {
-        public Task<Certificate> AddCertificate(Certificate certificate);
+        public Task<Certificate> AddCertificate(Certificate certificate,User owner);
         public Certificate GetCertificate(int userId);
 
 

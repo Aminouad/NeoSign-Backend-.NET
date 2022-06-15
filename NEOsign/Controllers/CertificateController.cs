@@ -39,9 +39,7 @@ namespace NEOsign.Controllers
                 {
                      imageName = Path.GetFileName(certificateDto.Image.FileName);
                      imagePath = Path.Combine(@"C:\Users\ao\Documents\ApiSignatureNeoSign\ApiSignature\src\main\resources\", "CertificateUser" + owner.Id, imageName);
-                }
-               
-
+                }            
                 string dir = Path.Combine(baseURL, @"C:\Users\ao\Documents\ApiSignatureNeoSign\ApiSignature\src\main\resources\", "CertificateUser" + owner.Id);
                 if (!Directory.Exists(dir))
                 {
@@ -57,24 +55,15 @@ namespace NEOsign.Controllers
                     {
                         await certificateDto.Image.CopyToAsync(fileSteamImg);
                     }
-                }
-
-
-                Certificate cert = new Certificate();
-
-
-
-                cert.Type = certificateDto.type;
-
-                cert.User = owner;
-                cert.UserId = owner.Id;
-                cert.Path = filePath;
-                cert.PathImage = imagePath;
-
-                await _certificateService.AddCertificate(cert);
-
-
-                string json = JsonConvert.SerializeObject(cert, Formatting.Indented, new JsonSerializerSettings
+                }               
+                Certificate certificate = new Certificate();
+                certificate.Type = certificateDto.type;
+                certificate.User = owner;
+                certificate.UserId = owner.Id;
+                certificate.Path = filePath;
+                certificate.PathImage = imagePath;
+                await _certificateService.AddCertificate(certificate, owner);
+                string json = JsonConvert.SerializeObject(certificate, Formatting.Indented, new JsonSerializerSettings
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                 });

@@ -25,13 +25,15 @@ namespace NEOsign.Controllers
             _companyService = companyService;
             _personnelService = personnelService;
         }
-        [HttpPost("register")]
+        [HttpPost("register"), Authorize]
         public async Task<ActionResult<User>> Register(PersonnelDto request)
         {
             var user = new User();          
             AuthenticationController.CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
+            var master = _userService.GetUserByEmail(request.master);
             user.Email = request.Email;
             user.Role = request.Position;
+            user.Master=master.Role;
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;           
             var personnel = new Personnel();
@@ -39,8 +41,8 @@ namespace NEOsign.Controllers
             personnel.Email = request.Email;   
             personnel.Position = request.Position;
             personnel.Date = request.Date;
-            var master = _userService.GetUserByEmail(request.master);
             personnel.User = master;
+            personnel.Master = master.Role;
             Personnel addedPersonnel =await _personnelService.AddPersonnel(personnel,user);
             string json = JsonConvert.SerializeObject(addedPersonnel, Formatting.Indented, new JsonSerializerSettings
             {
@@ -48,7 +50,7 @@ namespace NEOsign.Controllers
             });
             return Ok(json);
         }
-        [HttpPost("GetPersonnelByUser")]
+        [HttpPost("GetPersonnelByUser"), Authorize]
         public async Task<IActionResult> GetPersonnelByUser(PersonnelRequest request)
         {
             User user = _userService.GetUserByEmail(request.userEmail);
@@ -61,7 +63,7 @@ namespace NEOsign.Controllers
 
         }
 
-        [HttpDelete("{personnelId}")]
+        [HttpDelete("{personnelId}"), Authorize]
         public async Task<string> DeletPersonnel(string personnelId)
         {
             if (personnelId == null) return null;

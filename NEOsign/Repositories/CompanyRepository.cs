@@ -13,7 +13,11 @@
             var company = await _context.Companies.FindAsync(id);
             if (company == null)
                 return "error";
-            User user =  _context.Users.Single(a => a.Email == company.Contact);
+            User user = _context.Users.Where(u => u.Email == company.Contact).Include(u => u.Personnels).SingleOrDefault(); 
+
+            var personnels = _context.Users.Where(p => p.Master == user.Role);
+           _context.Users.RemoveRange(personnels);
+           // await _context.SaveChangesAsync();
             // User user = _context.Users.OrderBy(e => e.Email == company.Contact).Include(e => e.Documents).First();          
             _context.Companies.Remove(company);
             await _context.SaveChangesAsync();

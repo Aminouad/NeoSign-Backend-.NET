@@ -25,8 +25,8 @@
 
         public  User GetUserByEmail(string email)
         {
-             var owner =  _context.Users.FirstOrDefault(a => a.Email == email);
-            if(owner != null)
+            var owner = _context.Users.Where(u => u.Email == email).Include(u => u.Certificate).SingleOrDefault();
+            if (owner != null)
             {
                 return owner;
             }

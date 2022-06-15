@@ -21,7 +21,7 @@ namespace NEOsign.Controllers
             _userService = userService;
 
         }
-        [HttpPost]
+        [HttpPost, Authorize]
         public async Task<IActionResult> AddDocument([FromForm] DocumentDto documentDto)
         {
             if (documentDto.File != null)

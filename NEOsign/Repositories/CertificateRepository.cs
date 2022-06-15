@@ -21,26 +21,26 @@ namespace NEOsign.Repositories
 
 
 
-        public async Task<Certificate> AddCertificate(Certificate certificate)
+        public async Task<Certificate> AddCertificate(Certificate certificate,User owner)
         {
-            if(certificate != null)
-            {
+            if(owner.Certificate==null)
+            {                 
                 _context.Certificates.Add(certificate);
-
-
                 await _context.SaveChangesAsync();
                 Certificate savedCertificate = new Certificate();
                 savedCertificate = await _context.Certificates.FindAsync(certificate.Id);
-
-
                 return savedCertificate;
-
-
             }
             else
             {
-                return null;
-
+                var OldCertificate = await _context.Certificates.FindAsync(owner.Certificate.Id);
+                OldCertificate.Type = certificate.Type;
+                OldCertificate.Path = certificate.Path;
+                OldCertificate.PathImage = certificate.PathImage;
+                await _context.SaveChangesAsync();
+                Certificate savedCertificate = new Certificate();
+                savedCertificate = await _context.Certificates.FindAsync(OldCertificate.Id);
+                return savedCertificate;
             }
         }
 
