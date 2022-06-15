@@ -7,6 +7,7 @@
         public string Email { get; set; } = string.Empty;
         public string Position { get; set; } = string.Empty;
         public string Date { get; set; } = string.Empty;
+        public string? Master { get; set; } 
         public User User { get; set; }
         public int UserId { get; set; }
        

@@ -19,39 +19,25 @@ namespace NEOsign.Data
        .HasMany(c => c.Documents)
        .WithOne(u => u.User)
        .OnDelete(DeleteBehavior.Cascade);
-
-
             modelBuilder.Entity<User>()
       .HasMany(c => c.Company)
       .WithOne(u => u.User)
       .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<User>()
+      .HasMany(c => c.Personnels)
+      .WithOne(u => u.User)
+      .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Document>()
      .HasOne(c => c.User)
      .WithMany(u => u.Documents)
      .OnDelete(DeleteBehavior.Cascade);
-
-
-           
-            
-
-
             modelBuilder.Entity<Personnel>()
      .HasOne(c => c.User)
      .WithMany(u => u.Personnels).HasForeignKey(p=> p.UserId)
      .OnDelete(DeleteBehavior.Cascade);
 
-          
-
-
-
-
-
-
         }
-
-
-
     }
 }

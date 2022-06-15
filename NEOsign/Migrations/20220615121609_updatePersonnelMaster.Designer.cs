@@ -12,8 +12,8 @@ using NEOsign.Data;
 namespace NEOsign.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220614084357_createInit")]
-    partial class createInit
+    [Migration("20220615121609_updatePersonnelMaster")]
+    partial class updatePersonnelMaster
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -160,6 +160,9 @@ namespace NEOsign.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Master")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
